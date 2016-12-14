@@ -1,0 +1,81 @@
+{% extends 'page.twig' %}
+
+{% import 'form.twig' as f %}
+
+{% block title %}
+	Programs
+{% endblock title %}
+
+
+{% block pageheader %}
+	<h1> Programs </h1>
+{% endblock pageheader %}
+
+
+
+{% block main %}
+
+    <h2> Theme Uploads </h2>
+    {% if context.hasuser %}
+        {#<a class="btn btn-info" href="/webproject/programupload" role="button">Upload New Program</a>#}
+    {%  endif %}
+
+    <form action="" method="post" role="form">
+        {#<input type="text" name="search" >#}
+        {{f.text({ label: 'Theme', name: 'search', required:false })}}
+
+
+        <input type="submit" class="btn btn-lg"/>
+        {#<button type='submit' name="search" class='btn btn btn-lg'> Search </button>#}
+    </form>
+
+
+        <h1></h1>
+    {%  for s in siteinfo.students %}
+
+    {%  endfor %}
+
+    {#<h1>Students: {{ for th in siteinfo.themess }}</h1>#}
+    <h1>Search value: {{ searchval }}</h1>
+    {#<h2>WORK: {{  siteinfo.students }}</h2>#}
+
+    {% if donesearch is defined %}
+        {#<h2>{{  searches }}</h2>#}
+
+        <div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Theme</th>
+                    <th>Supervisors</th>
+                    {#<th>Author</th>#}
+                    {#<th>Download</th>#}
+                    {#<th>Delete</th>#}
+                </tr>
+                </thead>
+                <tbody>
+                {% for th in themes %}
+                    <tr>
+                        <td>{{ th.name }}</td>
+                        <td>{{ th.description }}</td>
+                        <td> {{ s }} </td>
+                        {#<td>{{ s.author }}</td>#}
+                        {#<td><a href="programs/?id={{ th.id }}">Download</a></td>#}
+                        {#<td><a href="programs/?delete={{ th.id }}">Delete</a></td>#}
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock main %}
+
+
+{% block pagefooter %}
+{% endblock pagefooter %}
+
+
+{% block footer %}
+{% endblock footer %}

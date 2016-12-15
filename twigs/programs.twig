@@ -20,51 +20,121 @@
         {#<a class="btn btn-info" href="/webproject/programupload" role="button">Upload New Program</a>#}
     {%  endif %}
 
+    {% if alreadysubmitted %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ errorsubmit }}</strong>
+        </div>
+    {% endif %}
+    {% if showerr %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ errormsg }}</strong>
+        </div>
+    {% endif %}
+    {% if success %}
+        <div class="alert alert-success" role="alert">
+            <strong>{{ successmsg }}</strong>
+        </div>
+    {% endif %}
+
+
     <form action="" method="post" role="form">
         {#<input type="text" name="search" >#}
         {{f.text({ label: 'Theme', name: 'search', required:false })}}
 
 
+        {#
+
+        MAYBE ADD BUTTONS TO ARRANGE THE STUDENTS IN A SPECIFIC ORDER.
+        ORDER BY THEME??
+
+
+
+        #}
         <input type="submit" class="btn btn-lg"/>
         {#<button type='submit' name="search" class='btn btn btn-lg'> Search </button>#}
     </form>
 
+    {% for th in t %}
+        {{ th }}
+    {%  endfor %}
 
-        {#{{ s.login }}#}
+    {#{% if t is defined %}#}
+{##}
+        <h1>--->{{ searchval }}</h1>
+{##}
+    {#{% endif %}#}
+    {#<h1>--->{{t }}</h1>#}
+    {#{% for th in siteinfo.themeleaders %}#}
+        {#{{ th }}#}
     {#{%  endfor %}#}
 
-    <h1>Search value: {{ searchval }}</h1>
 
-    {% if donesearch is defined %}
+
+    {#{% if donesearch is defined %}#}
         {#<h2>{{  searches }}</h2>#}
 
-        <div>
+
+        <div class="well">
             <table class="table table-hover">
                 <thead>
-                <tr>
+                <tr class="bg-info">
                     <th>Student</th>
                     <th>Theme</th>
-                    <th>Supervisors</th>
-                    {#<th>Author</th>#}
-                    {#<th>Download</th>#}
-                    {#<th>Delete</th>#}
+                    <th>Theme Leader</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for s in siteinfo.students %}
-                    <tr>
-                        <td>{{ s.login }}</td>
-                        <td>{{ th.description }}</td>
-                        <td> {{ s.email }} </td>
-                        {#<td>{{ s.author }}</td>#}
+
+                <form id="arbitrate" action="#" method="post">
+                    <tr class="warning">
+                        <td name ="sname" value="{{ s.login }}">
+                            <input type="hidden" name="stdntid" value="{{ s.getID }}">
+
+                            {{ s.login }}
+                        </td>
+                        <td>
+                            <select name="themeselect" id="themeselect" class="form-control">
+                                {% for th in siteinfo.themes %}
+                                    {% for ch in siteinfo.choices %}
+                                        {% if s.getID == ch.user_id %}
+                                            {% if th.getID == ch.theme1_id %}
+                                               <option value="{{ th.getID }}" >1st choice: {{ th.name }}</option>
+                                            {% endif %}
+                                            {% if th.getID == ch.theme2_id %}
+                                                <option value="{{ th.getID }}" >2nd choice: {{ th.name }}</option>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select name="themeleader" id="themeleader" class="form-control">
+                                {% for tl in siteinfo.themeleaders %}
+                                    <option value="{{ tl.getID }}" >{{ tl.login }}</option>
+                                {%  endfor %}
+                            </select>
+                        </td>
+
+                        <td><button type="submit" value="{{ s.getID }}" name="submitbutton" class="btopics btn btn-default" data-dismiss="modal">Confirm</button></td>
+
+                        {#<td><a href="programs/?id={{ th.id }}">Download</a></td>#}
                         {#<td><a href="programs/?id={{ th.id }}">Download</a></td>#}
                         {#<td><a href="programs/?delete={{ th.id }}">Delete</a></td>#}
                     </tr>
+                </form>
                 {%  endfor %}
                 </tbody>
+
             </table>
+
+            <button type="submit" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Confirm Selection</button>
+
         </div>
-    {% endif %}
+
+
 
 {% endblock main %}
 

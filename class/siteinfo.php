@@ -23,8 +23,6 @@
             $ids = R::getCol('select user_id from role where rolename_id=?', [$studentID]);
 
 //            $idsOfStudents = R::findAll('role', 'rolename_id = ?', [$studentID]); //PROBLEM
-
-
 //            $userIdArray = array_map(function($s) //creates an array of user_ids
 //            {
 //                return $s->user_id;
@@ -36,8 +34,37 @@
 //                array_push($students, R::findOne('user', 'id = ?', [$id])); //add each student to array where their id = user_id of a student (also found in role as a student id)
                 $students[] = R::load('user', $id);
             }
-
             return $students;
+        }
+
+/**
+ * Get all the themechoice beans
+ *
+ * @return array
+ */
+public function themeleaders()
+        {
+
+            $themeid = R::findOne('rolename', 'name = ?', [ 'Themeleader' ])->getID();
+            $ids = R::getCol('select user_id from role where rolename_id=?', [$themeid]);
+
+            $themeleaders = []; //create empty array
+            foreach ($ids as $id)
+            {
+                $themeleaders[] = R::load('user', $id);
+            }
+            return $themeleaders;
+        }
+
+
+/**
+ * Get all the themechoice beans
+ *
+ * @return array
+ */
+        public function choices()
+        {
+            return R::findAll('themechoice', 'order by user_id');
         }
 
 /**

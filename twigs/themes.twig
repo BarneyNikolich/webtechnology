@@ -47,12 +47,12 @@
 	{
 	    e.preventDefault();
 	    e.stopPropagation();
-	    bootbox.confirm('Are you sure you you want to delete this user?', function(r){
+	    bootbox.confirm('Are you sure you you want to delete this theme?', function(r){
 	        if (r)
 		{ // user picked OK
 		    var tr = x.parent().parent()
 		    $.post('{{base}}/ajax.php', {
-			    op:	'delbean',
+			    op:	'delprojectandtheme',
 			    bean: 'theme',
 			    id: tr.data('id')
 			},
@@ -63,6 +63,7 @@
 		}
 	    })
 	}
+
 	else if (x.hasClass('editb'))
 	{
 	    var tr = x.parent().parent()
@@ -84,9 +85,12 @@
     </div>
 {% endblock header %}
 
+
+
 {% block main %}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
+
 
 			{% if showerr %}
 			    <div class="alert alert-danger" role="alert">
@@ -96,6 +100,11 @@
             {% if alreadysubmitted %}
 				<div class="alert alert-danger" role="alert">
 					<strong>{{ errorsubmit }}</strong>
+				</div>
+            {% endif %}
+            {% if success %}
+				<div class="alert alert-success" role="alert">
+					<strong>{{ successmsg }}</strong>
 				</div>
             {% endif %}
 
@@ -119,7 +128,7 @@
 
                 {% if context.hasadmin %}
 					<td><i class="editb fa fa-pencil"></i></td>
-			        <td class="danger"><i class="delb fa fa-trash-o"></i></td>
+			        <td class="danger"><i class="delb delp fa fa-trash-o"></i></td>
 				{% endif %}
 
 			</tr>

@@ -29,6 +29,7 @@
             'adduser'       => array(TRUE, TRUE, FALSE),
             'confvalue'     => array(TRUE, TRUE, FALSE),
             'delbean'       => array(TRUE, TRUE, FALSE),
+            'delprojectandtheme'=> array(TRUE, TRUE, FALSE),
             'deluser'       => array(TRUE, TRUE, FALSE),
             'newconf'       => array(TRUE, TRUE, FALSE),
             'toggle'        => array(TRUE, TRUE, FALSE),
@@ -238,6 +239,28 @@
             $fdt = $context->formdata();
             R::trash($context->load($fdt->mustpost('bean'), $fdt->mustpost('id'), Context::R400));
         }
+
+/**
+ * Delete a bean
+ *
+ * The type of bean to be deleted: The theme and associated topics
+ *
+ * @param object	$context	The context object for the site
+ *
+ * @return void
+ */
+        private function delprojectandtheme($context)
+        {
+            $fdt = $context->formdata();
+            $deleteID = $fdt->mustpost('id');
+            $idsoftopics = R::findAll('topic', 'theme_id = ?', [$deleteID]);
+            foreach ($idsoftopics as $id)
+            {
+                R::trash($context->load('topic', $id->getID(), Context::R400));
+            }
+            R::trash($context->load($fdt->mustpost('bean'), $deleteID, Context::R400));
+        }
+
 /**
  * Delete a User
  *

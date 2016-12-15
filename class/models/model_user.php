@@ -136,6 +136,38 @@
             return is_object($this->hasrole('Site', 'Student'));
         }
 
+        /**
+         * @return bool
+         */
+        public function isthemeleader()
+        {
+            return is_object($this->hasrole('Site', 'Themeleader'));
+        }
+
+        /**
+         * @return bool
+         */
+        public function ismoduleleader()
+        {
+            return is_object($this->hasrole('Site', 'Moduleleader'));
+        }
+
+        /**
+         * @return bool
+         */
+        public function issupervisor()
+        {
+            return is_object($this->hasrole('Site', 'Supervisor'));
+        }
+
+//        /**
+//         * @return bool
+//         */
+//        public function isstudent()
+//        {
+//            return is_object($this->hasrole('Site', 'Student'));
+//        }
+
 /**
  * Is this user active?
  *

@@ -1,4 +1,4 @@
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -45,6 +45,8 @@
                     {% if context.hasuser %}
                         <li{{page == 'themes' ? ' class="active"'}}><a href="{{base}}/themes">Themes</a></li>
                         <li{{page == 'topics' ? ' class="active"'}}><a href="{{base}}/topics">Topics</a></li>
+                        <li{{page == 'moduleleader' ? ' class="active"'}}><a href="{{base}}/test">Module Leader</a></li>
+
 
                     {% endif %}
                     {% if context.hasstudent %}

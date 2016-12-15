@@ -19,43 +19,55 @@
 
         public function handle($context)
         {
+            $t = new SiteInfo();
+            $themes = $t->choices();
 
-            /**
-             * ASK LINDSAY HOW TO CALL SITE INFO HERE??
-             * HOW can I call findALL?? to get all students
-             * ALSO HOW TO PASS IN AN ARRAY WITH ADDVAL!
-             */
-//            SiteInfo::students();
-
-            $studentID = R::findOne('rolename', 'name = ?', [ 'Student' ])->id;
-//
-//            $idsOfStudents = R::findAll('role', 'rolename_id = ?', [$studentID]);
-//
-//            $p = array_map(function($s){return $s->user_id;}, $idsOfStudents);
-//
-//            $students = array();
-//            foreach ($p as $id)
-//            {
-//                array_push($students, R::findOne('user', 'id = ?', [$id]));
-//            }
-
-
-//            $context->local()->addval('s', $idsOfStudents); // add to local
-
-
-
-//            $themes = siteinfo.themes(); How do I call this? Ask Lindsay
-            $context->local()->addval('donesearch', true);
-
-            $themes = R::findAll('theme', 'order by id'); //find all theme beans
-            $context->local()->addval('themes', $themes); // add to local
-
-//            $context->local()->addval('done', true);
-//
-            /**
-             * Content only executes when there is a post with search in the paramaters
-             */
             $formd = $context->formdata(); //Gets parameters out of page! Use as search bar!
+            if($formd->haspost('themeleader'))
+            {
+                $themeid = $formd->post('themeselect');
+                $thmeleaderid = $formd->post('themeselect');
+                $id = $formd->post('submitbutton');
+                $userhassubmitted = false;
+
+                $existsid = R::find('themeselection', 'student_id = ?', [ $id ]);
+                if(sizeof($existsid) > 0) //if > 0 then at least 1 entry already exists for that user
+                {
+                    $userhassubmitted = true;
+                }
+
+                if($themeid == '') //if no theme is submitted
+                {
+                    $context->local()->addval('showerr', true);
+                    $context->local()->addval('errormsg', 'STUDENT HAS NOT SELECTED THEMES. CANNOT POST');
+                }
+                else if($userhassubmitted)
+                {
+                    $context->local()->addval('alreadysubmitted', true);
+                    $context->local()->addval('errorsubmit', 'You have already submitted for that user');
+                }
+                else
+                {
+                    $context->local()->addval('success', true);
+                    $context->local()->addval('successmsg', 'Successful submission of choices.');
+                    $topic = R::dispense('themeselection');
+                    $topic->student_id = $id;
+                    $topic->theme_id = $themeid;
+                    $topic->themeleader_id = $thmeleaderid;
+                    R::store($topic);
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
             if (($searchval = $formd->post('search', '')) !== '')
             {
                 $context->local()->addval('searchval', $searchval);

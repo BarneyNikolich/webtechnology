@@ -110,7 +110,7 @@
                     {%  endfor %}
 					<th colspan="2">&nbsp;</th>
                     {% if context.hasadmin %}
-						<td><i class="delb fa fa-trash-o"></i></td>
+						<td class="danger"><i class="delb fa fa-trash-o"></i></td>
                     {% endif %}
 
 				</tr>
@@ -126,8 +126,10 @@
 
 
             </table>
-	    <p><button class="btn btn-primary" data-toggle="modal" data-target="#addu" type="button">Add Topic</button></p>
-        </div>
+	    {#<p><button class="btn btn-primary" data-toggle="modal" data-target="#addu" type="button">Add Topic</button></p>#}
+			<button type="button" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Add Topic</button>
+
+		</div>
     </div>
 
 
@@ -156,7 +158,7 @@
 			<div class="form-group">
 				<label for="un" class="control-label">Theme</label>
 
-				<select name="selectthemes[]" id="selecttopic" multiple>
+				<select name="selectthemes[]" id="selecttopic" multiple class="form-control">
 					{%  for th in siteinfo.themes %}
 						{#ASK LINDSAY -- HOW TO USE SELECT!?!?!?!??!#}
 					{#{{ f.select({name: 'selecttopic', label: 'Topic', value: pr, ph: 'Topic', required: 1, text: 'work'}) }}#}
@@ -167,7 +169,7 @@
 			</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="addb">Add</button>
+                    <button type="submit" class="btn-success btn btn-primary" id="addb">Add</button>
                 </div>
 				</form>
 

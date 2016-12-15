@@ -30,14 +30,10 @@
     </form>
 
 
-        <h1></h1>
-    {%  for s in siteinfo.students %}
+        {#{{ s.login }}#}
+    {#{%  endfor %}#}
 
-    {%  endfor %}
-
-    {#<h1>Students: {{ for th in siteinfo.themess }}</h1>#}
     <h1>Search value: {{ searchval }}</h1>
-    {#<h2>WORK: {{  siteinfo.students }}</h2>#}
 
     {% if donesearch is defined %}
         {#<h2>{{  searches }}</h2>#}
@@ -55,11 +51,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for th in themes %}
+                {% for s in siteinfo.students %}
                     <tr>
-                        <td>{{ th.name }}</td>
+                        <td>{{ s.login }}</td>
                         <td>{{ th.description }}</td>
-                        <td> {{ s }} </td>
+                        <td> {{ s.email }} </td>
                         {#<td>{{ s.author }}</td>#}
                         {#<td><a href="programs/?id={{ th.id }}">Download</a></td>#}
                         {#<td><a href="programs/?delete={{ th.id }}">Delete</a></td>#}

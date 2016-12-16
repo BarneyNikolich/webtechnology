@@ -12,46 +12,18 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                         <li{{page == 'home' ? ' class="active"'}}><a href="{{base}}/">Home</a></li>
-                        <li{{page == 'about' ? ' class="active"'}}><a href="{{base}}/about">About</a></li>
-                        <li{{page == 'contact' ? ' class="active"'}}><a href="{{base}}/contact">Contact</a></li>
-                        {% if context.hasadmin %}
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{base}}/admin/pages">Pages</a></li>
-                                    <li><a href="{{base}}/admin/users">Users</a></li>
-                                    <li><a href="{{base}}/admin/contexts">Contexts</a></li>
-                                    <li><a href="{{base}}/admin/roles">Roles</a></li>
-                                    <li><a href="{{base}}/admin/config">Config</a></li>
-                                </ul>
-                            </li>
-                        {% endif %}
-                        {% if context.hasdeveloper %}
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developer<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{base}}/devel/hack">Run Code</a></li>
-                                    <li><a href="{{base}}/devel/fail">Fail</a></li>
-                                    <li><a href="{{base}}/devel/throw">Throw</a></li>
-                                    <li><a href="{{base}}/devel/mail">Test mail</a></li>
-                                    <li><a href="{{base}}/admin/info">PHP Info</a></li>
-{#
-                                    <li><a href="{{base}}/devel/errlog">View Error Log</a></li>
-                                    <li><a href="{{base}}/devel/clearlog">Clear Error Log</a></li>
-#}
-                                </ul>
-                            </li>
-                        {% endif %}
+
                     {% if context.hasuser %}
                         <li{{page == 'themes' ? ' class="active"'}}><a href="{{base}}/themes">Themes</a></li>
                         <li{{page == 'topics' ? ' class="active"'}}><a href="{{base}}/topics">Topics</a></li>
-                        <li{{page == 'moduleleader' ? ' class="active"'}}><a href="{{base}}/test">Module Leader</a></li>
-
-
+                        <li{{page == 'themeleader' ? ' class="active"'}}><a href="{{base}}/themeleader">Theme Leader</a></li>
+                        <li{{page == 'moduleleader' ? ' class="active"'}}><a href="{{base}}/moduleleader">Module Leader</a></li>
+                        <li{{page == 'supervisor' ? ' class="active"'}}><a href="{{base}}/supervisor">Supervisor</a></li>
                     {% endif %}
-                    {% if context.hasstudent %}
+
+                    {% if context.hasdeveloper %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">ONLY SEE IF STUDENT<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developer<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{base}}/devel/hack">Run Code</a></li>
                                 <li><a href="{{base}}/devel/fail">Fail</a></li>
@@ -61,8 +33,18 @@
                             </ul>
                         </li>
                     {% endif %}
-
-
+                    {% if context.hasadmin %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{base}}/admin/pages">Pages</a></li>
+                                <li><a href="{{base}}/admin/users">Users</a></li>
+                                <li><a href="{{base}}/admin/contexts">Contexts</a></li>
+                                <li><a href="{{base}}/admin/roles">Roles</a></li>
+                                <li><a href="{{base}}/admin/config">Config</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
                 {% if context.hasuser %}
                     <ul class="nav navbar-nav navbar-right">

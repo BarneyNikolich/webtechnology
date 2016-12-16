@@ -49,13 +49,13 @@
 {% block header %}
     <div class="col-md-12">
 	<h1>Topics</h1>
-
     </div>
 {% endblock header %}
 
 {% block main %}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
+
             <table class="table table-striped table-hover" id="topictab">
                 <thead>
                     <tr>
@@ -69,11 +69,12 @@
 
                 </thead>
 
-
+{#		Only show topics with specific id. displays when user has come from themes page #}
 		{% if fltrtheme is defined %}
 
 			<tbody>
             {% for pr in siteinfo.topics %}
+				{% if pr.checked == false %}
 			    {% if pr.theme_id == fltrtheme %}
 					<tr data-id=" {{ pr.id }} ">
 						<td>{{ pr.name }}</td>
@@ -90,7 +91,7 @@
 
 				    </tr>
 				{% endif %}
-
+			{% endif %}
             {% else %}
 				<tr><td colspan="4">No topics are defined</td></tr>
             {% endfor %}
@@ -99,6 +100,7 @@
 
 			<tbody>
             {% for pr in siteinfo.topics %}
+				{% if pr.checked == false %}
 				<tr data-id=" {{ pr.id }} ">
 					<td>{{ pr.name }}</td>
 					<td>{{ pr.description }}</a></td>
@@ -109,11 +111,12 @@
                         {%  endif %}
                     {%  endfor %}
 					<th colspan="2">&nbsp;</th>
-                    {% if context.hasadmin %}
+                    {% if context.hasthemeleader or context.hassupervisor %}
 						<td class="danger"><i class="delb fa fa-trash-o"></i></td>
                     {% endif %}
 
 				</tr>
+			{% endif %}
             {% else %}
 				<tr><td colspan="4">No topics are defined</td></tr>
             {% endfor %}
@@ -122,12 +125,10 @@
 		{% endif
 		%}
 
-
-
-
             </table>
-	    {#<p><button class="btn btn-primary" data-toggle="modal" data-target="#addu" type="button">Add Topic</button></p>#}
-			<button type="button" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Add Topic</button>
+            {% if context.hasthemeleader or context.hassupervisor %}
+			    <button type="button" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Add Topic</button>
+			{% endif %}
 
 		</div>
     </div>
@@ -158,14 +159,17 @@
 			<div class="form-group">
 				<label for="un" class="control-label">Theme</label>
 
-				<select name="selectthemes[]" id="selecttopic" multiple class="form-control">
+				<select name="selectthemes[]" id="selecttopic" required multiple class="form-control">
 					{%  for th in siteinfo.themes %}
-						{#ASK LINDSAY -- HOW TO USE SELECT!?!?!?!??!#}
-					{#{{ f.select({name: 'selecttopic', label: 'Topic', value: pr, ph: 'Topic', required: 1, text: 'work'}) }}#}
 					    <option value="{{ th.getID }}" >{{ th.name }}</option>
 					{% endfor %}
-
 				</select>
+				<div class="form-group">
+
+				    <label for="un" class="control-label">Hide Topic </label>
+				    <input type="checkbox" name="hidden">
+				</div>
+
 			</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

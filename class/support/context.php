@@ -136,6 +136,37 @@
         {
             return $this->hasuser() && $this->user()->isdeveloper();
         }
+
+/**
+ * Do we have a logged in moduleleader user?
+ *
+ * @return boolean
+ */
+        public function hasmoduleleader()
+        {
+            return $this->hasuser() && $this->user()->ismoduleleader();
+        }
+
+/**
+ * Do we have a logged in themeleader user?
+ *
+ * @return boolean
+ */
+        public function hasthemeleader()
+        {
+            return $this->hasuser() && $this->user()->isthemeleader();
+        }
+
+/**
+ * Do we have a logged in supervisor user?
+ *
+ * @return boolean
+ */
+        public function hassupervisor()
+        {
+            return $this->hasuser() && $this->user()->issupervisor();
+        }
+
 /**
  * Find out if this was validated using a token, if so, it is coming from a device not a browser
  *
@@ -165,6 +196,39 @@
                 $this->web()->noaccess();
             }
         }
+
+/**
+ * Check for a moduleleader and 403 if not
+ *
+ */
+        public function mustbemoduleleader()
+        {
+            if (!$this->hasmoduleleader()) {
+                $this->web()->noaccess();
+            }
+        }
+
+
+/**
+ * Check for a themeleader and 403 if not
+ */
+        public function mustbethemeleader()
+        {
+            if (!$this->hasthemeleader()) {
+                $this->web()->noaccess();
+            }
+        }
+
+/**
+ * Check for a supervisor and 403 if not
+ */
+        public function mebesupervisor()
+        {
+            if (!$this->hassupervisor()) {
+                $this->web()->noaccess();
+            }
+        }
+
 /**
  * Check for an developer and 403 if not
  */

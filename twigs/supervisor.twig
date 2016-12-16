@@ -1,0 +1,98 @@
+{% extends 'page.twig' %}
+{% import 'form.twig' as f %}
+
+{% macro tick(val, class) %}
+<i class="{{class}} fa fa-toggle-{% if val %}on{% else %}off{% endif %}"></i>
+{% endmacro tick %}
+
+{% import _self as h %}
+
+{% block scripts %}
+    <script src="{{fwurls.parsley}}"></script>
+    <script src="{{assets}}/js/util.js"></script>
+    <script src="{{assets}}/js/bgfade.js"></script>
+{% endblock scripts %}
+
+{% block onload %}
+
+{% endblock onload %}
+
+{% block header %}
+    <div class="col-md-12">
+	<h1>Supervisor - Your Students </h1>
+    </div>
+{% endblock header %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+
+
+
+
+            {% if alreadysubmitted %}
+				<div class="alert alert-danger" role="alert">
+					<strong>{{ errorsubmit }}</strong>
+				</div>
+            {% endif %}
+            {% if showerr %}
+				<div class="alert alert-danger" role="alert">
+					<strong>{{ errormsg }}</strong>
+				</div>
+            {% endif %}
+            {% if success %}
+				<div class="alert alert-success" role="alert">
+					<strong>{{ successmsg }}</strong>
+				</div>
+            {% endif %}
+
+			<div class="well">
+				<table class="table table-hover">
+					<thead>
+					<tr class="bg-info">
+						<th>Students Assigned to you</th>
+						<th>Theme</th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+
+                        {% for thm in siteinfo.supervisorsutdent(context.user.getID) %}
+                            {% for stu in siteinfo.students %}
+                                {% if stu.getID == thm %}   {# Student is associated to supervisor#}
+									<td><h3>{{ stu.login }}</h3></td>
+                                    {% for thmselect in siteinfo.themeselection %}
+                                        {% if thmselect.student_id == stu.getID %}
+                                            {% for theme in siteinfo.themes %}
+                                                {% if theme.getID == thmselect.theme_id  %}
+													<td><h3>  {{ theme.name }}</h3></td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+
+
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+
+						</tr>
+
+
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+		</div>
+	</div>
+
+
+{% endblock main %}
+
+{% block pagefooter %}
+{% endblock pagefooter %}

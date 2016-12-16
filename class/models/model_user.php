@@ -160,13 +160,6 @@
             return is_object($this->hasrole('Site', 'Supervisor'));
         }
 
-//        /**
-//         * @return bool
-//         */
-//        public function isstudent()
-//        {
-//            return is_object($this->hasrole('Site', 'Student'));
-//        }
 
 /**
  * Is this user active?

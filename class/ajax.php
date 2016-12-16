@@ -53,7 +53,7 @@
         }
 
 /**
- * Add a Theme
+ * Add a Project
  *
  * @param object	$context	The context object for the site
  *
@@ -71,7 +71,7 @@
         }
 
 
-        /**
+/**
  * Edit a Theme
  *
  * @param object	$context	The context object for the site
@@ -89,8 +89,7 @@
         }
 
 
-
-        /**
+/**
  * Add a User
  *
  * @param object	$context	The context object for the site

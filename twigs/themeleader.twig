@@ -1,0 +1,108 @@
+{% extends 'page.twig' %}
+{% import 'form.twig' as f %}
+
+{% macro tick(val, class) %}
+<i class="{{class}} fa fa-toggle-{% if val %}on{% else %}off{% endif %}"></i>
+{% endmacro tick %}
+
+{% import _self as h %}
+
+{% block scripts %}
+    <script src="{{fwurls.parsley}}"></script>
+    <script src="{{assets}}/js/util.js"></script>
+    <script src="{{assets}}/js/bgfade.js"></script>
+{% endblock scripts %}
+
+{% block onload %}
+
+{% endblock onload %}
+
+{% block header %}
+    <div class="col-md-12">
+	<h1>Theme Leader - Supervisor Allocation </h1>
+
+    </div>
+{% endblock header %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+
+
+            {% if alreadysubmitted %}
+				<div class="alert alert-danger" role="alert">
+					<strong>{{ errorsubmit }}</strong>
+				</div>
+            {% endif %}
+            {% if showerr %}
+				<div class="alert alert-danger" role="alert">
+					<strong>{{ errormsg }}</strong>
+				</div>
+            {% endif %}
+            {% if success %}
+				<div class="alert alert-success" role="alert">
+					<strong>{{ successmsg }}</strong>
+				</div>
+            {% endif %}
+
+			<div class="well">
+				<table class="table table-hover">
+					<thead>
+					<tr class="bg-info">
+						<th>Students Taking your theme</th>
+						<th>Supervisor</th>
+						<th>Allocate</th>
+					</tr>
+					</thead>
+					<tbody>
+					<form id="arbitrate" action="#" method="post">
+
+                    {% for thm in siteinfo.themeselection %}
+                        {% if context.user.getID == thm.themeleader_id %} {#Ensure only student associated to logged in themeleader are displayed #}
+                            {% for stu in siteinfo.students %}
+                                {% if thm.student_id == stu.getID  %}
+									<tr>
+										<td><h4>{{ stu.login }}</h4></td>
+										<td>
+											<select name="spvsrselect" id="spvsrselect" class="form-control">
+                                                {% for p in siteinfo.supervisors %}
+												    <option value="{{ p.getID }}">{{ p.login }}</option>
+												{% endfor %}
+											</select>
+										</td>
+										<td>
+										    <button type="submit" value="{{ stu.getID }}" name="submitbutton" class="btn btn-info" data-dismiss="modal">Allocate</button>
+										</td>
+									</tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+						{% endif %}s
+
+
+
+
+                    {% endfor %}
+					</form>
+
+
+
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+
+
+
+
+		</div>
+	</div>
+
+
+{% endblock main %}
+
+{% block pagefooter %}
+{% endblock pagefooter %}

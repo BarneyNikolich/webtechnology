@@ -12,7 +12,7 @@
     class Theme extends Siteaction
     {
 /**
- * Handles static pages that are nested in depth /multi/level/page
+ * Handles static pages for themes
  *
  * @param object	$context	The context object for the site
  *
@@ -20,17 +20,12 @@
  */
         public function handle($context)
         {
+
             $formd = $context->formdata();
             $thmone = $formd->post('firstchoice');
             $thmtwo = $formd->post('secondchoice');
             $userhassubmitted = false;
             $themedeleted = false;
-
-            /**#
-             * POTERNTIALLY check
-             *
-             * if submit requester is in table -- if so are they themes that have been deleted -- then allow to resubmit
-             */
 
             if($context->hasuser()) //Only run when user is logged in or will cause error as getID returns null
             {
@@ -40,20 +35,6 @@
                 {
                     $userhassubmitted = true;
                 }
-
-//                //Check if a theme has been deleetd -- allow user to select themes again
-//                $id1 = R::getCol('select theme1_id from themechoice where user_id=?', [$userid]);
-//                $id2 = R::getCol('select theme2_id from themechoice where user_id=?', [$userid]);
-//                $result = array_merge($id1, $id2);
-//
-//                $foundtheme = R::getCol('select id from theme where id=? or id=?', [$result[0], $result[1]]);
-//
-//                if(sizeof($foundtheme) < 1)
-//                {
-//                    $themedeleted = true;
-//                }
-
-
             }
             if (($formd->post('firstchoice', '')) !== '')
             {
@@ -67,15 +48,8 @@
                     $context->local()->addval('errormsg', 'Theme choices are equal! Choices must be different!');
 //                    Web::getinstance()->bad();
                 }
-                elseif($themedeleted)
+                elseif($themedeleted) //Themes have been deleted... allow user to reselect choices.
                 {
-//                    $idsoftopics = R::findAll('themechoice', 'user_id = ?', [$userid])->getID();
-//
-//                    foreach($idsoftopics as $i)
-//                    {
-//                        R::trash($context->load('themechoice', $i, Context::R400));
-//                    }
-
                     $choice = R::dispense('themechoice');
                     $choice->user_id = $context->user()->getID();
                     $choice->theme1_id = $thmone;

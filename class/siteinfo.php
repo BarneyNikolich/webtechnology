@@ -22,30 +22,23 @@
             $studentID = R::findOne('rolename', 'name = ?', [ 'Student' ])->getID();
             $ids = R::getCol('select user_id from role where rolename_id=?', [$studentID]);
 
-//            $idsOfStudents = R::findAll('role', 'rolename_id = ?', [$studentID]); //PROBLEM
-//            $userIdArray = array_map(function($s) //creates an array of user_ids
-//            {
-//                return $s->user_id;
-//            }, $idsOfStudents); //Iterates through idsOfStudents and gets all user_id of students and adds to array
-
             $students = []; //create empty array
             foreach ($ids as $id) //for each element of p
             {
-//                array_push($students, R::findOne('user', 'id = ?', [$id])); //add each student to array where their id = user_id of a student (also found in role as a student id)
                 $students[] = R::load('user', $id);
             }
             return $students;
         }
 
 /**
- * Get all the themechoice beans
+ * Get all the themeleader beans
  *
  * @return array
  */
 public function themeleaders()
         {
 
-            $themeid = R::findOne('rolename', 'name = ?', [ 'Themeleader' ])->getID();
+            $themeid = R::findOne('rolename', 'name =?', [ 'Themeleader' ])->getID();
             $ids = R::getCol('select user_id from role where rolename_id=?', [$themeid]);
 
             $themeleaders = []; //create empty array
@@ -56,6 +49,45 @@ public function themeleaders()
             return $themeleaders;
         }
 
+/**
+ * Get all the supervisor beans
+ *
+ * @return array
+ */
+        public function supervisors()
+        {
+
+            $supervisorid = R::findOne('rolename', 'name =?', [ 'Supervisor' ])->getID();
+            $ids = R::getCol('select user_id from role where rolename_id=?', [$supervisorid]);
+
+            $supervisors = []; //create empty array
+            foreach ($ids as $id)
+            {
+                $supervisors[] = R::load('user', $id);
+            }
+            return $supervisors;
+        }
+
+/**
+ * Get all the themeselection beans
+ *
+ * @return array
+ */
+        public function themeselection()
+        {
+            return R::findAll('themeselection', 'order by student_id');
+        }
+
+/**
+ * Get all the students that have been assigned to a supervisor beans
+ *
+ * @return array
+ */
+        public function supervisorsutdent($id)
+        {
+            $ids = R::getCol('select student_id from allocatespvsr where supervisor_id=?', [$id]);
+            return $ids;
+        }
 
 /**
  * Get all the themechoice beans
@@ -87,7 +119,7 @@ public function themeleaders()
         }
 
 /**
- * Get all the themes beans
+ * Get all the topic beans
  *
  * @return array
  */
@@ -104,18 +136,6 @@ public function themeleaders()
         public function themebyid()
         {
             return R::findAll('topic', 'order by name');
-        }
-
-
-
-        /**
- * Get all the supervisor beans
- *
- * @return array
- */
-        public function supervisors()
-        {
-            return R::findAll('supervisor', 'order by name');
         }
 
 

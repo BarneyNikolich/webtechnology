@@ -74,8 +74,6 @@
 	    var tr = x.parent().parent()
 	    window.location.href = '{{base}}/topics/browse/' + tr.data('id');
 	}
-
-
     })
 {% endblock onload %}
 
@@ -90,7 +88,6 @@
 {% block main %}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-
 
 			{% if showerr %}
 			    <div class="alert alert-danger" role="alert">
@@ -114,7 +111,6 @@
                         <th>Theme</th>
                         <th>Description</th>
 						<th colspan="2">&nbsp;</th>
-
 					</tr>
 
                 </thead>
@@ -126,7 +122,7 @@
 				<td><button type="button" name="bbutton" class="btopics btn btn-default" data-dismiss="modal">Browse Topics</button></td>
 				<th colspan="2">&nbsp;</th>
 
-                {% if context.hasadmin %}
+                {% if context.hasthemeleader or context.hassupervisor %}
 					<td><i class="editb fa fa-pencil"></i></td>
 			        <td class="danger"><i class="delb delp fa fa-trash-o"></i></td>
 				{% endif %}
@@ -139,11 +135,13 @@
             </table>
 	    {#<p><button class="btn btn-primary" data-toggle="modal" data-target="#addu" type="button">Add Theme</button></p>#}
 
-			<button type="button" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Add Theme</button>
-
+			{% if context.hasthemeleader or context.hassupervisor %}
+			    <button type="button" data-toggle="modal" data-target="#addu" class="btn btn-primary btn-lg btn-block btn-success">Add Theme</button>
+			{% endif %}
 
 			<br/><br>
 
+            {% if context.hasstudent %}
 
 			<div class="well">
 			<h3 class="text-info">Theme choice - Choose 2</h3>
@@ -172,6 +170,7 @@
 			</div>
 
 			<br><br><br>
+			{% endif %}
 
         </div>
     </div>
@@ -201,7 +200,6 @@
 			</div>
 
 		    </form>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
